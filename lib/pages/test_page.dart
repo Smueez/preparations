@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:preparations/models/all_question.dart';
 import 'package:preparations/service/all_question.dart';
 import 'package:preparations/service/global.dart' as global;
+import 'package:fluttertoast/fluttertoast.dart';
+
 class TestPage extends StatefulWidget {
   const TestPage({Key? key}) : super(key: key);
 
@@ -50,7 +52,12 @@ class _TestPageState extends State<TestPage> {
         oneSec,
         (timer) {
           if(examTimeInSec == 0){
-            /// TO DO: go to result page auto from here
+            Fluttertoast.showToast(
+              msg: "Time's up!",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 1,
+            );
             timer.cancel();
             submitExamResult();
           }
@@ -95,7 +102,12 @@ class _TestPageState extends State<TestPage> {
     double totalMarks = (correct.toDouble() - (incorrect.toDouble()/modelTestData['negative_marks']));
     String result =
       totalMarks <= modelTestData['pass_marks']? 'F' : 'P';
-
+    Fluttertoast.showToast(
+      msg: "Model Test is submitted.",
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIosWeb: 1,
+    );
     Navigator.pushReplacementNamed(context,'/result',arguments: {
       'student_full_name': 'Mueez',
       'student_id': 12345,
