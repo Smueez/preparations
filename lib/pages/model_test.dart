@@ -166,7 +166,11 @@ class _ModelTestPageState extends State<ModelTestPage> {
                             ),
 
                             onPressed: (){
-                              /// TO DO: go to result page
+
+                              Navigator.pushNamed(context,'/all_result',arguments: {
+                                'student_id': 12345,
+                                'model_test_id':  modelData['id']
+                              });
                             },
                             child: Text(
                               'See Results',
@@ -188,11 +192,8 @@ class _ModelTestPageState extends State<ModelTestPage> {
                             ),
 
                             onPressed: (){
-                              /// TO DO: go to result page
-                              Navigator.pushNamed(context,'/all_result',arguments: {
-                                'student_id': 12345,
-                                'model_test_id':  modelData['id']
-                              });
+                              /// TO DO: do nothing
+
                             },
                             child: Text(
                               'Archived',
