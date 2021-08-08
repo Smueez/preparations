@@ -125,7 +125,7 @@ class _AllQuestionPageState extends State<AllQuestionPage> {
 
                                     },
                                   ),
-                                  quesData['option_5'] != null?
+                                  quesData['option_5'] != ''?
                                   RadioListTile<String>(
                                     value: quesData['option_5'],
                                     title: Text(quesData['option_5']),

@@ -301,7 +301,7 @@ class _TestPageState extends State<TestPage> {
 
                                       },
                                     ),
-                                    quesData['option_5'] != null?
+                                    quesData['option_5'] != ''?
                                     RadioListTile<String>(
                                       value: quesData['option_5'],
                                       title: Text(quesData['option_5']),
@@ -374,10 +374,26 @@ class _TestPageState extends State<TestPage> {
                         primary: Colors.green
                       ),
                       onPressed: (){
-                        setState(() {
-                          isNotStarted = false;
-                        });
-                        timerCountDown(modelTestData['exam_time']);
+                        if(isProcessFinished){
+                          setState(() {
+                            isNotStarted = false;
+                          });
+                          timerCountDown(modelTestData['exam_time']);
+                          Fluttertoast.showToast(
+                            msg: "Model test has started",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                            timeInSecForIosWeb: 1,
+                          );
+                        }
+                        else {
+                          Fluttertoast.showToast(
+                            msg: "Please wait...",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.CENTER,
+                            timeInSecForIosWeb: 1,
+                          );
+                        }
                       },
                       child: Text('Start'),
                     ),

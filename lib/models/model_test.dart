@@ -1,3 +1,4 @@
+import 'dart:convert' show utf8;
 class ModelTestModelClass {
   late int id;
   late String title;
@@ -28,10 +29,14 @@ class ModelTestModelClass {
         required this.passMarks,
         required this.status});
 
+  static String utf8convert(String text) {
+    List<int> bytes = text.toString().codeUnits;
+    return utf8.decode(bytes);
+  }
   ModelTestModelClass.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
-    shortDescription = json['short_description'];
+    shortDescription = utf8convert(json['short_description']);
     examStartDateTime = json['exam_start_date_time'];
     examEndDateTime = json['exam_end_date_time'];
     examResultDateTime = json['exam_result_date_time'];

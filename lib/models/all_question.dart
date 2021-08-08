@@ -19,15 +19,22 @@ class AllQuestionModelClass{
         required this.option5,
         required this.correctAnswer});
 
+  static String utf8convert(String? text) {
+    if(text == null){
+      return '';
+    }
+    List<int> bytes = text.toString().codeUnits;
+    return utf8.decode(bytes);
+  }
   AllQuestionModelClass.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    question = json['question'];
-    option1 = json['option_1'];
-    option2 = json['option_2'];
-    option3 = json['option_3'];
-    option4 = json['option_4'];
-    option5 = json['option_5'];
-    correctAnswer = json['correct_answer'];
+    question = utf8convert(json['question']);
+    option1 =  utf8convert(json['option_1']);
+    option2 =  utf8convert(json['option_2']);
+    option3 =  utf8convert(json['option_3']);
+    option4 =  utf8convert(json['option_4']);
+    option5 =  utf8convert(json['option_5']);
+    correctAnswer =  utf8convert(json['correct_answer']);
   }
 
   Map<String, dynamic> toJson() {
