@@ -142,247 +142,251 @@ class _TestPageState extends State<TestPage> {
     double topHeight = MediaQuery.of(context).padding.top;
     return Scaffold(
       appBar: global.defaultAppBar,
-      body:Stack(
-        children: [
-          SingleChildScrollView(
+      body:SizedBox(
+        height: double.infinity,
+        child: Stack(
+          
+          children: [
+            SingleChildScrollView(
 
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                SizedBox(height: 10,),
-                Container(
-                  height: 60,
-                  decoration: BoxDecoration(
-                      border: Border(
-                          bottom: BorderSide(
-                              color: Colors.orangeAccent,
-                              width: 1
-                          )
-                      )
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Expanded(
-                        flex:3,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Center(
-                              child: Text(
-                                modelTestData['title'],
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  SizedBox(height: 10,),
+                  Container(
+                    height: 60,
+                    decoration: BoxDecoration(
+                        border: Border(
+                            bottom: BorderSide(
+                                color: Colors.orangeAccent,
+                                width: 1
+                            )
+                        )
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Expanded(
+                          flex:3,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Center(
+                                child: Text(
+                                  modelTestData['title'],
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Center(
-                              child: Text(
-                                'Pass Mark: ${modelTestData['pass_marks']}',
+                              Center(
+                                child: Text(
+                                  'Pass Mark: ${modelTestData['pass_marks']}',
+                                ),
+                              ),
+                              Center(
+                                child: Text(
+                                  'Neg. Mark: ${modelTestData['negative_marks']}',
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: Center(
+                            child: Text(
+                              '$hour : $min : $sec',
+                              style: TextStyle(
+                                color: clockColor,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold
                               ),
                             ),
-                            Center(
-                              child: Text(
-                                'Neg. Mark: ${modelTestData['negative_marks']}',
+                          )
+                        )
+                      ],
+                    ),
+                  ),
+                  isProcessFinished?
+                  data.length != 0?
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 0.0,horizontal: 6.0),
+                    child: SizedBox(
+                      height: (totalScreenHeight - (topHeight + appbarheight) - 120),
+                      child: ListView.builder(
+                          itemCount: data.length,
+                          itemBuilder: (context, index){
+
+                            Map<String, dynamic> quesData = data[index].toJson();
+                            String correctAns = quesData['correct_answer'];
+                            //String selectedVal = quesData['option_4'];
+                            return Card(
+                              child: ListTile(
+                                title: Text(
+                                    quesData['question'],
+                                    style: TextStyle(fontWeight: FontWeight.bold)
+                                ),
+                                subtitle: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    RadioListTile<String>(
+                                      value: quesData['option_1'],
+                                      title: Text(quesData['option_1']),
+                                      groupValue: selectedValues[index],
+                                      onChanged: (val){
+                                        setState(() {
+                                          selectedValues[index] = val;
+                                          print(val);
+                                          print(selectedValues[index]);
+                                          if(val == correctAns){
+                                            ansCheckList[index] = 'y';
+                                          }
+                                          else {
+                                            ansCheckList[index] = 'w';
+                                          }
+                                        });
+                                      },
+                                    ),
+                                    RadioListTile<String>(
+                                      value: quesData['option_2'],
+                                      title: Text(quesData['option_2']),
+                                      groupValue: selectedValues[index],
+                                      onChanged: (val){
+                                        setState(() {
+                                          selectedValues[index] = val;
+
+                                          if(val == correctAns){
+                                            ansCheckList[index] = 'y';
+                                          }
+                                          else {
+                                            ansCheckList[index] = 'w';
+                                          }
+                                        });
+                                      },
+                                    ),
+                                    RadioListTile<String>(
+                                      value: quesData['option_3'],
+                                      title: Text(quesData['option_3']),
+                                      groupValue: selectedValues[index],
+                                      onChanged: (val){
+                                        setState(() {
+                                          selectedValues[index] = val;
+
+                                          if(val == correctAns){
+                                            ansCheckList[index] = 'y';
+                                          }
+                                          else {
+                                            ansCheckList[index] = 'w';
+                                          }
+                                        });
+                                      },
+                                    ),
+                                    RadioListTile<String>(
+                                      value: quesData['option_4'],
+                                      title: Text(quesData['option_4']),
+                                      groupValue: selectedValues[index],
+                                      //selected: true,
+                                      onChanged: (val){
+                                        setState(() {
+                                          selectedValues[index] = val;
+
+                                          if(val == correctAns){
+                                            ansCheckList[index] = 'y';
+                                          }
+                                          else {
+                                            ansCheckList[index] = 'w';
+                                          }
+                                        });
+
+                                      },
+                                    ),
+                                    quesData['option_5'] != null?
+                                    RadioListTile<String>(
+                                      value: quesData['option_5'],
+                                      title: Text(quesData['option_5']),
+                                      groupValue: selectedValues[index],
+                                      onChanged: (val){
+                                        setState(() {
+                                          selectedValues[index] = val!;
+
+                                          if(val == correctAns){
+                                            ansCheckList[index] = 'y';
+                                          }
+                                          else {
+                                            ansCheckList[index] = 'w';
+                                          }
+                                        });
+                                      },
+                                    ) : SizedBox(height: 0,),
+
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            );
+                          }
+                      ),
+                    ),
+                  )
+                      :
+                  Center(child: Text('No Data!'),)
+
+                      :
+                  Center(child: CircularProgressIndicator()),
+                  SizedBox(
+                    height: 50,
+                    width: double.infinity,
+                    child: ElevatedButton(
+
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.green,
+                      ),
+
+                      onPressed: submitExamResult,
+                      child: Text(
+                        'Submit',
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white
                         ),
                       ),
-                      Expanded(
-                        flex: 2,
-                        child: Center(
-                          child: Text(
-                            '$hour : $min : $sec',
-                            style: TextStyle(
-                              color: clockColor,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold
-                            ),
-                          ),
-                        )
-                      )
-                    ],
-                  ),
-                ),
-                isProcessFinished?
-                data.length != 0?
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 0.0,horizontal: 6.0),
-                  child: SizedBox(
-                    height: (totalScreenHeight - (topHeight + appbarheight) - 120),
-                    child: ListView.builder(
-                        itemCount: data.length,
-                        itemBuilder: (context, index){
-
-                          Map<String, dynamic> quesData = data[index].toJson();
-                          String correctAns = quesData['correct_answer'];
-                          //String selectedVal = quesData['option_4'];
-                          return Card(
-                            child: ListTile(
-                              title: Text(
-                                  quesData['question'],
-                                  style: TextStyle(fontWeight: FontWeight.bold)
-                              ),
-                              subtitle: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  RadioListTile<String>(
-                                    value: quesData['option_1'],
-                                    title: Text(quesData['option_1']),
-                                    groupValue: selectedValues[index],
-                                    onChanged: (val){
-                                      setState(() {
-                                        selectedValues[index] = val;
-                                        print(val);
-                                        print(selectedValues[index]);
-                                        if(val == correctAns){
-                                          ansCheckList[index] = 'y';
-                                        }
-                                        else {
-                                          ansCheckList[index] = 'w';
-                                        }
-                                      });
-                                    },
-                                  ),
-                                  RadioListTile<String>(
-                                    value: quesData['option_2'],
-                                    title: Text(quesData['option_2']),
-                                    groupValue: selectedValues[index],
-                                    onChanged: (val){
-                                      setState(() {
-                                        selectedValues[index] = val;
-
-                                        if(val == correctAns){
-                                          ansCheckList[index] = 'y';
-                                        }
-                                        else {
-                                          ansCheckList[index] = 'w';
-                                        }
-                                      });
-                                    },
-                                  ),
-                                  RadioListTile<String>(
-                                    value: quesData['option_3'],
-                                    title: Text(quesData['option_3']),
-                                    groupValue: selectedValues[index],
-                                    onChanged: (val){
-                                      setState(() {
-                                        selectedValues[index] = val;
-
-                                        if(val == correctAns){
-                                          ansCheckList[index] = 'y';
-                                        }
-                                        else {
-                                          ansCheckList[index] = 'w';
-                                        }
-                                      });
-                                    },
-                                  ),
-                                  RadioListTile<String>(
-                                    value: quesData['option_4'],
-                                    title: Text(quesData['option_4']),
-                                    groupValue: selectedValues[index],
-                                    //selected: true,
-                                    onChanged: (val){
-                                      setState(() {
-                                        selectedValues[index] = val;
-
-                                        if(val == correctAns){
-                                          ansCheckList[index] = 'y';
-                                        }
-                                        else {
-                                          ansCheckList[index] = 'w';
-                                        }
-                                      });
-
-                                    },
-                                  ),
-                                  quesData['option_5'] != null?
-                                  RadioListTile<String>(
-                                    value: quesData['option_5'],
-                                    title: Text(quesData['option_5']),
-                                    groupValue: selectedValues[index],
-                                    onChanged: (val){
-                                      setState(() {
-                                        selectedValues[index] = val!;
-
-                                        if(val == correctAns){
-                                          ansCheckList[index] = 'y';
-                                        }
-                                        else {
-                                          ansCheckList[index] = 'w';
-                                        }
-                                      });
-                                    },
-                                  ) : SizedBox(height: 0,),
-
-                                ],
-                              ),
-                            ),
-                          );
-                        }
                     ),
+                  )
+                ],
+              ),
+            ),
+            Visibility(
+              visible: isNotStarted,
+              child: Positioned(
+                left: 0,
+                right: 0,
+                top: 0,
+                bottom: 0,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.8),
+                    backgroundBlendMode: BlendMode.darken,
                   ),
-                )
-                    :
-                Center(child: Text('No Data!'),)
-
-                    :
-                Center(child: CircularProgressIndicator()),
-                SizedBox(
-                  height: 50,
-                  width: double.infinity,
-                  child: ElevatedButton(
-
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.green,
-                    ),
-
-                    onPressed: submitExamResult,
-                    child: Text(
-                      'Submit',
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white
+                  child: Center(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.green
                       ),
+                      onPressed: (){
+                        setState(() {
+                          isNotStarted = false;
+                        });
+                        timerCountDown(modelTestData['exam_time']);
+                      },
+                      child: Text('Start'),
                     ),
                   ),
                 )
-              ],
-            ),
-          ),
-          Visibility(
-            visible: isNotStarted,
-            child: Positioned(
-              left: 0,
-              right: 0,
-              top: 0,
-              bottom: 0,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.8),
-                  backgroundBlendMode: BlendMode.darken,
-                ),
-                child: Center(
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.green
-                    ),
-                    onPressed: (){
-                      setState(() {
-                        isNotStarted = false;
-                      });
-                      timerCountDown(modelTestData['exam_time']);
-                    },
-                    child: Text('Start'),
-                  ),
-                ),
-              )
-            ),
-          )
-        ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

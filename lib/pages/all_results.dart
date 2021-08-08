@@ -24,7 +24,7 @@ class _AllResultPageState extends State<AllResultPage> {
         data = await getResult.getDataByStudent(resultData['student_id'].toString());
       }
       else {
-        data = await getResult.getDataByModelTest(resultData['student_id'].toString(), resultData['model_test_id']);
+        data = await getResult.getDataByModelTest(resultData['student_id'].toString(), resultData['model_test_id'].toString());
       }
 
       print('data: ${data.length}');
